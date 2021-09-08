@@ -1,389 +1,143 @@
+<?php
+ require "src/modules/config.php"
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Champ-log</title>
+    <title><? echo $config['title']?></title>
     <link rel="stylesheet" href="./src/index.css" >
 </head>
 <body>
-<header>
-    <div class="header-container">
-        <div class="upper-part wrapper">
-            <div class="logo">
-                <h1>Champ_log</h1>
-            </div>
-            <div class="about">
-                <ul>
-                    <li class="about-elem"><a href="index.html">Главная</a></li>
-                    <li class="about-elem"><a href="https://www.youtube.com/watch?v=grd-K33tOSM&ab_channel=Leonz">???</a></li>
-                </ul>
-            </div>
-        </div>
-        <nav class="header-nav">
-            <ul class="nav-list">
-                <li class="nav-element"><a href="#">Gaming</a></li>
-                <li class="nav-element"><a href="#">IT</a></li>
-                <li class="nav-element"><a href="#">Music</a></li>
-                <li class="nav-element"><a href="#">Everyday life</a></li>
-                <li class="nav-element"><a href="#">Fishing and hunt</a></li>
-                <li class="nav-element"><a href="#">Other</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<? include "./src/modules/header.php"?>
 <main class="wrapper">
     <div class="grid-big">
         <section class="grid-big-card">
             <div class="card-head">
                 <h3> Новинки </h3>
-                <a href="#"><span>Все записи</span></a>
+                <a href="/articles.php"><span>Все записи</span></a>
             </div>
+            <?
+            $articles = mysqli_query($connection,"SELECT * FROM `articles` ORDER BY id DESC LIMIT 6")
+            ?>
             <div class="card-content">
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-
+                <?
+                while ($article = mysqli_fetch_assoc($articles))
+                {?>
+                    <article class="article">
+                        <div class="article-head">
+                            <a href="article.php?id=<?echo $article['id']?>"><h3><? echo $article['title']?></h3></a>
+                            <?
+                            $art_cat = false;
+                            foreach ($categories as $cat)
+                            {
+                                if($cat['id'] == $article['categorie_id'])
+                                {
+                                    $art_cat = $cat;
+                                    break;
+                                }
+                            }
+                            ?>
+                            <span>Категория:
+                                <a href="/articles.php?id=<? echo $art_cat['id']?>">
+                                    <? echo $art_cat['name']?>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="article-content">
+                            <? echo  mb_substr($article['text'],0,100,"utf-8")?>...
+                        </div>
+                    </article>
+                    <?
+                }
+                ?>
             </div>
         </section>
         <section class="grid-big-card">
             <div class="card-head">
                 <h3> Gaming </h3>
-                <a href="#"><span>Все записи</span></a>
+                <a href="/articles.php?id?=1"><span>Все записи</span></a>
             </div>
+            <?
+            $articles = mysqli_query($connection,"SELECT * FROM `articles` WHERE categorie_id = 1 ORDER BY id DESC LIMIT 6")
+            ?>
             <div class="card-content">
+                <?
+                while ($article = mysqli_fetch_assoc($articles))
+                {?>
                 <article class="article">
                     <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
+                        <a href="article.php?id=<?echo $article['id']?>"><h3><? echo $article['title']?></h3></a>
+                        <?
+                        $art_cat = false;
+                        foreach ($categories as $cat)
+                        {
+                            if($cat['id'] == $article['categorie_id'])
+                            {
+                                $art_cat = $cat;
+                                break;
+                            }
+                        }
+                        ?>
+                        <span>Категория:
+                                <a href="/articles.php?id=<? echo $art_cat['id']?>">
+                                    <? echo $art_cat['name']?>
+                                </a>
+                            </span>
                     </div>
                     <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
+                        <? echo  mb_substr($article['text'],0,100,"utf-8")?>...
                     </div>
                 </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-
+                <?
+                }
+                ?>
             </div>
         </section>
         <section class="grid-big-card">
             <div class="card-head">
-                <h3> IT </h3>
-                <a href="#"><span>Все записи</span></a>
+                <h3> Music </h3>
+                <a href="/articles.php?id=3"><span>Все записи</span></a>
             </div>
+            <?
+            $articles = mysqli_query($connection,"SELECT * FROM `articles` WHERE categorie_id = 3 ORDER BY id DESC LIMIT 6")
+            ?>
             <div class="card-content">
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-                <article class="article">
-                    <div class="article-head">
-                        <a href="#"><h3>How to not succ</h3></a>
-                        <span>Категория: <a href="#">Gaming</a></span>
-                    </div>
-                    <div class="article-content">
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                        some text  some text  some text  some text  some text  some text  some text
-                    </div>
-                </article>
-
+                <?
+                while ($article = mysqli_fetch_assoc($articles))
+                {?>
+                    <article class="article">
+                        <div class="article-head">
+                            <a href="article.php?id=<?echo $article['id']?>"><h3><? echo $article['title']?></h3></a>
+                            <?
+                            $art_cat = false;
+                            foreach ($categories as $cat)
+                            {
+                                if($cat['id'] == $article['categorie_id'])
+                                {
+                                    $art_cat = $cat;
+                                    break;
+                                }
+                            }
+                            ?>
+                            <span>Категория:
+                                <a href="/articles.php?id=<? echo $art_cat['id']?>">
+                                    <? echo $art_cat['name']?>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="article-content">
+                            <? echo  mb_substr($article['text'],0,100,"utf-8")?>...
+                        </div>
+                    </article>
+                    <?
+                }
+                ?>
             </div>
         </section>
     </div>
-    <div class="side-bar">
-        <div class="grid-small">
-            <section class="grid-small-card">
-                <div class="socials">
-                    <ul>
-                        <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Facebook</a></li>
-                        <li><a href="https://github.com/P1aer">GitHub</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=Wl959QnD3lM">Twitter</a></li>
-                    </ul>
-                </div>
-            </section>
-            <section class="grid-small-card">
-                <h3 class="aside-head"> Топ недели</h3>
-                <div class="aside-grid">
-                    <article class="article">
-                        <div class="article-head">
-                            <a href="#"><h3>How to not succ</h3></a>
-                            <span>Категория: <a href="#">Gaming</a></span>
-                        </div>
-                        <div class="article-content">
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text
-                        </div>
-                    </article>
-                    <article class="article">
-                        <div class="article-head">
-                            <a href="#"><h3>How to not succ</h3></a>
-                            <span>Категория: <a href="#">Gaming</a></span>
-                        </div>
-                        <div class="article-content">
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text
-                        </div>
-                    </article>
-                    <article class="article">
-                        <div class="article-head">
-                            <a href="#"><h3>How to not succ</h3></a>
-                            <span>Категория: <a href="#">Gaming</a></span>
-                        </div>
-                        <div class="article-content">
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text
-                        </div>
-                    </article>
-                    <article class="article">
-                        <div class="article-head">
-                            <a href="#"><h3>How to not succ</h3></a>
-                            <span>Категория: <a href="#">Gaming</a></span>
-                        </div>
-                        <div class="article-content">
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text
-                        </div>
-                    </article>
-                    <article class="article">
-                        <div class="article-head">
-                            <a href="#"><h3>How to not succ</h3></a>
-                            <span>Категория: <a href="#">Gaming</a></span>
-                        </div>
-                        <div class="article-content">
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text
-                        </div>
-                    </article>
-                </div>
-            </section>
-            <section class="grid-small-card">
-                <h3 class="aside-head">Комментарии</h3>
-                <div class="aside-grid">
-                    <article class="aside-comment">
-                        <div class="comment-head">
-                            <h4 class="name">Johny Sins</h4>
-                            <span class="from">How to not succ</span><br>
-                            <span class="time"> 6 мин назад</span>
-                        </div>
-                         <div class="article-body">
-                             some text  some text  some text  some text  some text  some text  some text
-                             some text  some text  some text  some text  some text  some text  some text
-                         </div>
-                    </article>
-                    <article class="aside-comment">
-                        <div class="comment-head">
-                            <h4 class="name">Johny Sins</h4>
-                            <span class="from">How to not succ</span><br>
-                            <span class="time"> 6 мин назад</span>
-                        </div>
-                        <div class="article-body">
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text  some text  some text  some text
-                        </div>
-                    </article>
-                    <article class="aside-comment">
-                        <div class="comment-head">
-                            <h4 class="name">Johny Sins</h4>
-                            <span class="from">How to not succ</span><br>
-                            <span class="time"> 6 мин назад</span>
-                        </div>
-                        <div class="article-body">
-                            some text  some text  some text  some text  some text  some text  some text
-                            some text  some text  some text  some text  some text  some text  some text
-                        </div>
-                    </article>
-                </div>
-            </section>
-        </div>
-    </div>
+    <? include "./src/modules/sidebar.php"?>
 </main>
-<footer>
-    <div class="footer-content">
-        <div class="logo">
-            <h1>Champ_log</h1>
-        </div>
-        <div class="about">
-            <ul>
-                <li class="about-elem"><a href="index.html">Главная</a></li>
-                <li class="about-elem"><a href="https://www.youtube.com/watch?v=grd-K33tOSM&ab_channel=Leonz">???</a></li>
-            </ul>
-        </div>
-    </div>
-    </div>
-</footer>
+<? include "./src/modules/footer.php"?>
 </body>
 </html>

@@ -1,15 +1,15 @@
 <?php
-require "./modules/config.php"
+require "./src/modules/config.php"
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title><? echo $config['title']?></title>
-    <link rel="stylesheet" href="./index.css" >
+    <link rel="stylesheet" href="src/index.css" >
 </head>
 <body>
-<? include "./modules/header.php"?>
+<? include "./src/modules/header.php" ?>
 <main class="wrapper">
     <div class="grid-big">
     <?
@@ -114,9 +114,9 @@ require "./modules/config.php"
             </div>
         </form>
     </div>
-    <? include "./modules/sidebar.php"?>
+    <? include "./src/modules/sidebar.php" ?>
 </main>
-<? include "./modules/footer.php"?>
+<? include "./src/modules/footer.php" ?>
 
 </body>
 </html>

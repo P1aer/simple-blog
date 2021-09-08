@@ -8,13 +8,18 @@ a {
   color: inherit;
   text-decoration: none;
 }
+a:hover {
+  text-decoration: underline;
+}
 
 h3 {
   font-size: 22px;
 }
 
 h4 {
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: bold;
 }
 
 h1 {
@@ -68,20 +73,54 @@ main {
   display: flex;
   margin-bottom: 25px !important;
 }
+main .comment-form {
+  background-color: rgba(0, 0, 5, 0.16);
+  padding: 20px;
+  height: fit-content;
+}
+main .comment-form button {
+  background-color: rgba(0, 0, 1, 0.8);
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  font-size: 16px;
+  padding: 10px 16px;
+  width: 30%;
+}
+main .comment-form input, main .comment-form textarea {
+  margin-bottom: 20px;
+  border: 1px solid rgba(0, 0, 1, 0.3);
+}
+main .comment-form input[type=text] {
+  font-size: 22px;
+}
+main .comment-form textarea {
+  font-size: 18px;
+  width: 100%;
+  height: 140px;
+}
+main .comment-form .form-content {
+  height: 50%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 main section {
   background-color: rgba(0, 0, 5, 0.16);
 }
 main .card-content {
   display: grid;
   grid-gap: 30px;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr;
 }
 main .grid-big {
   display: grid;
   grid-gap: 30px;
   margin-right: 20px;
-  grid-template-rows: repeat(3, 1fr);
+  grid-auto-rows: min-content;
   grid-auto-columns: 880px;
 }
 main .grid-big .grid-big-card {
@@ -135,6 +174,13 @@ main .grid-small .grid-small-card li {
 }
 main .grid-small .grid-small-card li:last-child {
   padding-bottom: 0;
+}
+
+.comments-card-content {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-rows: repeat(1, auto);
+  grid-auto-columns: auto;
 }
 
 .aside-comment .comment-head {
